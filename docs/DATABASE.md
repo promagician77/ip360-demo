@@ -1,18 +1,12 @@
 # Database
 
-Prisma ORM. The demo ships with SQLite so it runs anywhere with zero setup; production uses
-PostgreSQL. The schema is provider-neutral: JSON documents are stored in `String` columns and
-parsed by the service layer, so the same `schema.prisma` works on both. Switching:
+Prisma ORM on PostgreSQL. The demo environment uses Neon (attached through Vercel Storage);
+locally, point `DATABASE_URL` at any Postgres, including the same Neon database. Migrations live in
+`prisma/migrations` and are applied by `prisma migrate deploy` during every build.
 
-```prisma
-datasource db {
-  provider = "postgresql"   // was "sqlite"
-  url      = env("DATABASE_URL")
-}
-```
-
-then `npx prisma migrate dev --name init`. Optionally change `data`/`result`/`payload` columns to
-`Json` on Postgres for querying inside the document.
+JSON documents are stored in `String` columns and parsed by the service layer, so the schema is
+provider-neutral. For a throwaway local database you can flip `provider` to `"sqlite"` and use
+`prisma db push`; do not commit that change.
 
 ## Entity overview
 
@@ -42,15 +36,11 @@ User 1───* Assessment 1───1 Profile *───* MatchResult
 ## Commands
 
 ```bash
-npm run db:push      # sync schema to the database (dev)
+npm run db:migrate   # apply committed migrations
 npm run db:seed      # load 12 demo personas + demo API key (idempotent)
-npm run db:reset     # drop, recreate, reseed
+npm run db:reset     # drop, recreate, reseed (development only)
 npx prisma studio    # browse data
 ```
 
-For production use migrations instead of `db push`:
-
-```bash
-npx prisma migrate dev --name <change>   # locally, commits a migration
-npx prisma migrate deploy                # in CI/CD against production
-```
+Schema changes: edit `schema.prisma`, run `npx prisma migrate dev --name <change>` against a
+development database, and commit the new folder under `prisma/migrations`. The build applies it.

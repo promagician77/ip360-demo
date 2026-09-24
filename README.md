@@ -16,10 +16,10 @@ Working prototype of **PairKnow™** (assessment → structured compatibility pr
 ## Quick start
 
 ```bash
-cp .env.example .env
+cp .env.example .env            # set DATABASE_URL to a Postgres database (Neon free tier is fine)
 npm install
-npm run db:push
-npm run db:seed
+npm run db:migrate              # apply prisma/migrations
+npm run db:seed                 # 12 demo personas + demo API key (idempotent)
 npm run dev
 ```
 
@@ -30,12 +30,12 @@ Open http://localhost:3000. Demo login `demo@ip360.app` / `Demo1234!`.
 | `npm run dev` | Dev server |
 | `npm test` | Vitest unit tests |
 | `npm run lint` | ESLint |
-| `npm run build && npm start` | Production build |
-| `npm run db:push` / `db:seed` / `db:reset` | Database sync, seed, reset |
+| `npm run build && npm start` | Production build (also runs migrations + seed, as on Vercel) |
+| `npm run db:migrate` / `db:seed` / `db:reset` | Apply migrations, seed, reset |
 
 ## Stack
 
-Next.js 16 (App Router, TypeScript) · Tailwind CSS 4 · Prisma 6 (SQLite dev / PostgreSQL prod) ·
+Next.js 16 (App Router, TypeScript) · Tailwind CSS 4 · Prisma 6 + PostgreSQL ·
 zod · jose (JWT sessions) · bcryptjs · Vitest.
 
 ## Documentation

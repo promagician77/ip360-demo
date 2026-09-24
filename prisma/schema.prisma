@@ -1,6 +1,6 @@
 // IP360 prototype schema.
-// Demo runs on SQLite for zero-setup; switch `provider` to "postgresql" and set
-// DATABASE_URL for production. JSON columns are stored as strings so the schema is
+// Runs on PostgreSQL (Neon on Vercel). For a throwaway local SQLite database switch
+// `provider` to "sqlite" and use `prisma db push`. JSON columns are stored as strings so the schema is
 // identical on both providers (see docs/DATABASE.md).
 
 generator client {
@@ -8,7 +8,7 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlite"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 

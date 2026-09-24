@@ -1,0 +1,121 @@
+// IP360 prototype schema.
+// Demo runs on SQLite for zero-setup; switch `provider` to "postgresql" and set
+// DATABASE_URL for production. JSON columns are stored as strings so the schema is
+// identical on both providers (see docs/DATABASE.md).
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  passwordHash String
+  displayName  String
+  role         String   @default("user") // user | admin
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  assessments Assessment[]
+  profile     Profile?
+  apiKeys     ApiKey[]
+}
+
+/// Raw PairKnow answers. `payload` is AES-256-GCM encrypted at rest.
+model Assessment {
+  id          String    @id @default(cuid())
+  userId      String
+  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  version     String
+  status      String    @default("in_progress") // in_progress | completed
+  payload     String    // encrypted JSON (draft or final responses)
+  step        Int       @default(0)
+  completedAt DateTime?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  profile Profile?
+
+  @@index([userId, status])
+}
+
+/// Structured compatibility profile generated from a completed assessment.
+model Profile {
+  id            String     @id @default(cuid())
+  userId        String     @unique
+  user          User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  assessmentId  String     @unique
+  assessment    Assessment @relation(fields: [assessmentId], references: [id], onDelete: Cascade)
+  schemaVersion String
+  displayName   String
+  age           Int
+  gender        String
+  city          String
+  lat           Float
+  lng           Float
+  intent        String
+  /// Full CompatibilityProfile JSON (the PairSync contract).
+  data          String
+  isDemo        Boolean    @default(false)
+  createdAt     DateTime   @default(now())
+  updatedAt     DateTime   @updatedAt
+
+  matchesAsA MatchResult[] @relation("matchA")
+  matchesAsB MatchResult[] @relation("matchB")
+
+  @@index([gender, age])
+}
+
+/// Cached PairSync results between two stored profiles.
+model MatchResult {
+  id            String   @id @default(cuid())
+  profileAId    String
+  profileBId    String
+  profileA      Profile  @relation("matchA", fields: [profileAId], references: [id], onDelete: Cascade)
+  profileB      Profile  @relation("matchB", fields: [profileBId], references: [id], onDelete: Cascade)
+  engineVersion String
+  eligible      Boolean
+  score         Int
+  tier          String
+  /// Full MatchResult JSON including explanation and rule trail.
+  result        String
+  createdAt     DateTime @default(now())
+
+  @@unique([profileAId, profileBId, engineVersion])
+  @@index([profileAId, score])
+}
+
+/// Partner credentials for the external PairSync API.
+model ApiKey {
+  id         String    @id @default(cuid())
+  name       String
+  prefix     String    @unique // first 12 chars, shown in UI
+  keyHash    String    @unique // sha256 of full key
+  ownerId    String
+  owner      User      @relation(fields: [ownerId], references: [id], onDelete: Cascade)
+  scopes     String    @default("pairsync:match") // comma separated
+  lastUsedAt DateTime?
+  revokedAt  DateTime?
+  createdAt  DateTime  @default(now())
+
+  requests ApiRequestLog[]
+}
+
+model ApiRequestLog {
+  id        String   @id @default(cuid())
+  apiKeyId  String?
+  apiKey    ApiKey?  @relation(fields: [apiKeyId], references: [id], onDelete: SetNull)
+  endpoint  String
+  method    String
+  status    Int
+  latencyMs Int
+  ip        String?
+  createdAt DateTime @default(now())
+
+  @@index([createdAt])
+}

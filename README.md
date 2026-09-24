@@ -1,36 +1,64 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# IP360 · Intentional Pairing 360™ prototype
 
-## Getting Started
+Working prototype of **PairKnow™** (assessment → structured compatibility profile) and
+**PairSync™** (rules-based matching engine + REST API with human-readable explanations).
 
-First, run the development server:
+- Secure assessment experience with autosave, resume and retake
+- Answers encrypted at rest (AES-256-GCM), profiles as a versioned JSON contract
+- Deterministic rules engine: 6 eligibility rules, weighted 6-dimension scoring, 8 bounded
+  modifiers, tiers, and a rule-by-rule audit trail in every result
+- Partner API (`/api/v1/pairsync/*`, `/api/v1/pairknow/*`) with API keys, scopes, rate limits
+  and an OpenAPI 3.1 spec
+- Public demo journey with twelve seeded personas, an interactive API console, and an admin
+  console for keys and traffic
+- 40+ unit tests on the scoring and matching logic
+
+## Quick start
 
 ```bash
+cp .env.example .env
+npm install
+npm run db:push
+npm run db:seed
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open http://localhost:3000. Demo login `demo@ip360.app` / `Demo1234!`.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+| Command | What it does |
+| --- | --- |
+| `npm run dev` | Dev server |
+| `npm test` | Vitest unit tests |
+| `npm run lint` | ESLint |
+| `npm run build && npm start` | Production build |
+| `npm run db:push` / `db:seed` / `db:reset` | Database sync, seed, reset |
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Stack
 
-## Learn More
+Next.js 16 (App Router, TypeScript) · Tailwind CSS 4 · Prisma 6 (SQLite dev / PostgreSQL prod) ·
+zod · jose (JWT sessions) · bcryptjs · Vitest.
 
-To learn more about Next.js, take a look at the following resources:
+## Documentation
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+| Doc | Contents |
+| --- | --- |
+| [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) | Layers, request flows, versioning, security controls, extension points |
+| [docs/MATCHING_RULES.md](docs/MATCHING_RULES.md) | Every rule with ID, formula and threshold |
+| [docs/API.md](docs/API.md) | Endpoint reference and response shapes |
+| [docs/DATABASE.md](docs/DATABASE.md) | Schema, data protection, Postgres switch |
+| [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md) | Local, Vercel, Docker, env vars, production checklist |
+| [docs/HANDOFF.md](docs/HANDOFF.md) | Orientation for the next engineer |
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Routes
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+| Route | Purpose |
+| --- | --- |
+| `/` | Landing |
+| `/demo` | Public assessment-to-match journey with seeded personas |
+| `/developers` | API docs + live console |
+| `/methodology` | Scoring and matching rules, rendered from code |
+| `/app` | Signed-in overview |
+| `/app/assessment` | PairKnow™ wizard |
+| `/app/profile` | Generated profile |
+| `/app/matches`, `/app/matches/:id` | Ranked matches and full explanations |
+| `/app/admin` | API keys, usage (admin only) |

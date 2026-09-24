@@ -38,6 +38,16 @@ Open http://localhost:3000. Demo login `demo@ip360.app` / `Demo1234!`.
 Next.js 16 (App Router, TypeScript) · Tailwind CSS 4 · Prisma 6 + PostgreSQL ·
 zod · jose (JWT sessions) · bcryptjs · Vitest.
 
+## Design system
+
+- **Type**: Fraunces (variable serif, local files in `src/fonts`) for display; Geist for body and mono.
+- **Colour**: paper and ink base with one accent, ember. Match results are read as a *temperature*:
+  frost (cold) → neutral → ember (hot). Ineligible pairs are "breakers" and get a fractured, icy treatment.
+  Tokens live in `src/app/globals.css`; the tier palette was validated for colour-vision deficiency.
+- **Charts**: the score gauge, dimension meters, temperature scale and radar are plain SVG/CSS in
+  `src/components/ui.tsx` and `RadarChart.tsx`. No chart library.
+- **Photography**: `public/images/*.jpg`, Unsplash licence. Replace freely; the layouts only assume landscape crops.
+
 ## Documentation
 
 | Doc | Contents |

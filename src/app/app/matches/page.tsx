@@ -31,8 +31,8 @@ export default async function MatchesPage() {
   return (
     <div className="space-y-8">
       <div>
-        <div className="eyebrow mb-2">PairSync™</div>
-        <h1 className="text-3xl font-bold tracking-tight">Your matches</h1>
+        <div className="eyebrow eyebrow-ember mb-2">PairSync™</div>
+        <h1 className="display text-4xl">Your matches</h1>
         <p className="mt-1 text-fg-muted">
           {eligible.length} eligible of {matches.length} profiles in the pool. Ranked by compatibility score, with an explanation for each.
         </p>

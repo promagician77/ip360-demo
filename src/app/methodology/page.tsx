@@ -3,6 +3,7 @@ import { SiteFooter } from "@/components/SiteFooter";
 import { DIMENSIONS, DIMENSION_KEYS, LIKERT_QUESTIONS } from "@/lib/assessment/questions";
 import { ATTACHMENT_MATRIX, CONFLICT_MATRIX } from "@/lib/matching/rules";
 import { MODIFIER_CAP, TIER_THRESHOLDS } from "@/lib/matching/engine";
+import { PageHero } from "@/components/PageHero";
 
 export const metadata = { title: "Methodology" };
 
@@ -30,14 +31,11 @@ export default function MethodologyPage() {
   return (
     <>
       <SiteHeader />
-      <main className="mx-auto w-full max-w-4xl flex-1 px-4 py-10 sm:px-6">
-        <div className="eyebrow mb-2">Methodology</div>
-        <h1 className="text-3xl font-bold tracking-tight sm:text-4xl">How scoring and matching work</h1>
-        <p className="mt-3 text-fg-muted">
-          This page documents the placeholder methodology implemented in the prototype. In the real engagement these rules are replaced
-          1:1 by the client&apos;s documented methodology. The code is structured so each rule below maps to one function with one test.
-        </p>
-
+      <PageHero img="/images/methodology.jpg" eyebrow="Methodology" title={<>How scoring and matching <span className="display-italic">work</span>.</>}>
+        This page documents the placeholder methodology in the prototype. In the real engagement these rules are replaced 1:1 by the
+        client&apos;s documented methodology. Each rule below maps to one function with one test.
+      </PageHero>
+      <main className="mx-auto w-full max-w-4xl flex-1 px-5 py-12 sm:px-8">
         <Section title="1. Assessment scoring" id="scoring">
           <p>
             Thirty agreement items (1 = strongly disagree, 5 = strongly agree), five per dimension. Reverse-keyed items are flipped
@@ -139,7 +137,7 @@ export default function MethodologyPage() {
 function Section({ title, id, children }: { title: string; id: string; children: React.ReactNode }) {
   return (
     <section id={id} className="card mt-8 p-6 text-[0.95rem] leading-relaxed">
-      <h2 className="mb-3 text-xl font-bold tracking-tight">{title}</h2>
+      <h2 className="display mb-4 text-2xl">{title}</h2>
       {children}
     </section>
   );

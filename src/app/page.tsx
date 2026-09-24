@@ -1,205 +1,281 @@
+import Image from "next/image";
 import Link from "next/link";
 import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
+import { ScoreRing, TempScale } from "@/components/ui";
 import { DIMENSIONS, DIMENSION_KEYS } from "@/lib/assessment/questions";
 
 const STAGES = [
-  { name: "PairKnow™", status: "In this prototype", desc: "A 45-item assessment that turns preferences and characteristics into a structured compatibility profile.", tone: "brand" },
-  { name: "PairSync™", status: "In this prototype", desc: "A rules-based matching engine and REST API that scores pairs, ranks candidates and explains every result.", tone: "brand" },
-  { name: "PairNavigate™", status: "Planned", desc: "Relationship feedback and insights once two people connect.", tone: "muted" },
-  { name: "PairThrive™", status: "Planned", desc: "Ongoing growth, check-ins and long-term outcome tracking.", tone: "muted" },
+  { name: "PairKnow™", status: "Built", desc: "A 45-item assessment that turns preferences and characteristics into a structured compatibility profile." },
+  { name: "PairSync™", status: "Built", desc: "A rules-based matching engine and REST API that scores pairs, ranks candidates and explains every result." },
+  { name: "PairNavigate™", status: "Planned", desc: "Relationship feedback and insights once two people connect." },
+  { name: "PairThrive™", status: "Planned", desc: "Ongoing growth, check-ins and long-term outcome tracking." },
+];
+
+const HERO_DIMS: [string, number][] = [
+  ["Core values", 100],
+  ["Communication", 100],
+  ["Life direction", 95],
+  ["Connection", 95],
+  ["Lifestyle", 90],
+  ["Emotional style", 85],
 ];
 
 export default function HomePage() {
   return (
     <>
-      <SiteHeader />
+      <SiteHeader variant="overlay" />
       <main>
         {/* Hero */}
-        <section className="hero-glow">
-          <div className="mx-auto grid max-w-6xl gap-12 px-4 py-20 sm:px-6 lg:grid-cols-[1.1fr_0.9fr] lg:py-28">
-            <div className="fade-up">
-              <div className="eyebrow mb-4">Relationship intelligence for dating platforms</div>
-              <h1 className="text-4xl font-bold leading-[1.05] tracking-tight sm:text-5xl lg:text-6xl">
-                Matches you can <span className="gradient-text">explain.</span>
+        <section className="photo min-h-[min(92svh,1000px)]">
+          <Image src="/images/hero.jpg" alt="" fill priority sizes="100vw" className="object-cover" />
+          <div className="mx-auto flex min-h-[min(92svh,1000px)] max-w-7xl flex-col justify-end px-5 pb-16 pt-32 sm:px-8 lg:flex-row lg:items-end lg:justify-between lg:pb-24">
+            <div className="fade-up max-w-2xl">
+              <div className="eyebrow on-photo-muted">Intentional Pairing 360</div>
+              <h1 className="display mt-5 text-[3.2rem] leading-[0.98] sm:text-[4.4rem] lg:text-[5.6rem]">
+                Matches you can <span className="display-italic">explain.</span>
               </h1>
-              <p className="mt-6 max-w-xl text-lg text-fg-muted">
-                IP360 turns a short assessment into a structured compatibility profile, then applies documented matching rules to
-                produce a score, a tier and a plain-English explanation of why two people fit.
+              <p className="on-photo-muted mt-6 max-w-lg text-lg leading-relaxed">
+                A short assessment becomes a structured profile. Documented rules turn two profiles into a score, a temperature and a
+                plain-English reason. Nothing hidden.
               </p>
               <div className="mt-8 flex flex-wrap gap-3">
-                <Link href="/demo" className="btn btn-primary">
+                <Link href="/demo" className="btn btn-paper btn-lg">
                   See a live match
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M5 12h14M13 6l6 6-6 6" />
-                  </svg>
                 </Link>
-                <Link href="/register" className="btn btn-secondary">
+                <Link href="/register" className="btn btn-outline-paper btn-lg">
                   Take the assessment
                 </Link>
               </div>
-              <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-fg-muted">
-                <span className="inline-flex items-center gap-2">
-                  <span className="h-2 w-2 rounded-full bg-sage" /> Deterministic rules, no black box
-                </span>
-                <span className="inline-flex items-center gap-2">
-                  <span className="h-2 w-2 rounded-full bg-sage" /> Answers encrypted at rest
-                </span>
-                <span className="inline-flex items-center gap-2">
-                  <span className="h-2 w-2 rounded-full bg-sage" /> Partner REST API
-                </span>
-              </div>
             </div>
 
-            {/* Hero visual */}
-            <div className="fade-up relative" style={{ animationDelay: "120ms" }}>
-              <div className="card p-6 shadow-card">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <div className="text-xs font-semibold uppercase tracking-wider text-fg-faint">PairSync™ result</div>
-                    <div className="mt-1 text-xl font-bold">Maya × Daniel</div>
+            {/* Live-result card */}
+            <div className="glass fade-up mt-12 w-full max-w-sm rounded-2xl p-6 lg:mt-0" style={{ animationDelay: "160ms" }}>
+              <div className="flex items-start justify-between">
+                <div>
+                  <div className="on-photo-faint text-[0.65rem] font-semibold uppercase tracking-[0.16em]">PairSync™ result</div>
+                  <div className="display mt-1 text-2xl">
+                    Maya <span className="display-italic on-photo-faint">&amp;</span> Daniel
                   </div>
-                  <span className="pill" style={{ background: "color-mix(in srgb, var(--tier-exceptional) 14%, transparent)", color: "var(--tier-exceptional)" }}>
-                    <span className="h-1.5 w-1.5 rounded-full" style={{ background: "var(--tier-exceptional)" }} />
-                    Exceptional match
-                  </span>
                 </div>
-                <div className="mt-5 flex items-end gap-2">
-                  <span className="text-6xl font-bold leading-none tracking-tight">93</span>
-                  <span className="mb-1 text-fg-muted">/ 100</span>
+                <span className="pill" style={{ background: "rgba(201,54,27,0.22)", color: "#ffb3a3", borderColor: "rgba(255,179,163,0.3)" }}>
+                  Hot · Exceptional
+                </span>
+              </div>
+              <div className="mt-5 grid grid-cols-[auto_1fr] items-center gap-5">
+                <div className="rounded-full" style={{ background: "rgba(23,20,26,0.5)" }}>
+                  <ScoreRingOnGlass />
                 </div>
-                <div className="mt-5 space-y-3">
-                  {[
-                    ["Core Values", 100, "var(--tier-exceptional)"],
-                    ["Communication", 100, "var(--tier-exceptional)"],
-                    ["Life Direction", 95, "var(--tier-exceptional)"],
-                    ["Connection", 95, "var(--tier-exceptional)"],
-                    ["Lifestyle", 90, "var(--tier-exceptional)"],
-                    ["Emotional Style", 85, "var(--tier-strong)"],
-                  ].map(([label, v, color]) => (
-                    <div key={label as string} className="grid grid-cols-[110px_1fr_32px] items-center gap-3 text-sm">
-                      <span className="text-fg-muted">{label}</span>
-                      <div className="h-2 w-full overflow-hidden rounded-full bg-bg-soft">
-                        <div className="h-full rounded-full" style={{ width: `${v}%`, background: color as string }} />
+                <div className="space-y-2">
+                  {HERO_DIMS.map(([label, v]) => (
+                    <div key={label} className="grid grid-cols-[96px_1fr_28px] items-center gap-2 text-xs">
+                      <span className="on-photo-muted truncate">{label}</span>
+                      <div className="h-1.5 overflow-hidden rounded-r-sm" style={{ background: "rgba(251,247,241,0.16)" }}>
+                        <div className="h-full rounded-r-sm" style={{ width: `${v}%`, background: v >= 85 ? "#f26a4b" : "#e0a052" }} />
                       </div>
-                      <span className="text-right font-semibold">{v}</span>
+                      <span className="text-right font-semibold figures">{v}</span>
                     </div>
                   ))}
                 </div>
-                <div className="mt-5 rounded-2xl bg-bg-soft p-4 text-sm leading-relaxed text-fg-muted">
-                  <span className="font-semibold text-fg">Why:</span> both want marriage and children on the same timeline, both bring a secure
-                  attachment style, and both repair quickly after conflict. Watch-out: faith matters more to Daniel than to Maya.
-                </div>
               </div>
-              <div className="absolute -right-4 -top-4 -z-10 h-40 w-40 rounded-full bg-brand-soft blur-3xl" />
-              <div className="absolute -bottom-6 -left-6 -z-10 h-40 w-40 rounded-full bg-plum-soft blur-3xl" />
+              <p className="on-photo-muted mt-5 text-sm leading-relaxed">
+                <span className="font-semibold text-[#fbf7f1]">Why:</span> same timeline on marriage and children, both secure, both repair
+                quickly after conflict. Faith matters more to Daniel.
+              </p>
             </div>
           </div>
         </section>
 
-        {/* Product suite */}
-        <section className="mx-auto max-w-6xl px-4 py-16 sm:px-6">
-          <div className="eyebrow mb-3">The IP360 suite</div>
-          <h2 className="text-3xl font-bold tracking-tight">Four stages. Two built today.</h2>
-          <p className="mt-3 max-w-2xl text-fg-muted">
-            The architecture is designed so PairNavigate™ and PairThrive™ plug into the same profile and event model later, without
-            rewriting what exists.
-          </p>
-          <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            {STAGES.map((s, i) => (
-              <div key={s.name} className={`card card-lift p-5 ${s.tone === "muted" ? "opacity-75" : ""}`}>
-                <div className="flex items-center justify-between">
-                  <span className="grid h-8 w-8 place-items-center rounded-xl bg-plum-soft text-sm font-bold text-plum">{i + 1}</span>
-                  <span className={`pill ${s.tone === "brand" ? "bg-sage-soft text-sage" : "bg-bg-soft text-fg-faint"}`}>{s.status}</span>
-                </div>
-                <h3 className="mt-4 text-lg font-semibold">{s.name}</h3>
-                <p className="mt-1 text-sm text-fg-muted">{s.desc}</p>
+        {/* Proof strip */}
+        <section className="border-b border-line">
+          <div className="mx-auto grid max-w-7xl divide-y divide-line px-5 sm:px-8 md:grid-cols-3 md:divide-x md:divide-y-0">
+            {[
+              ["Deterministic", "Same two profiles, same answer, every time. No model drift, no black box."],
+              ["Encrypted at rest", "Assessment answers are sealed with AES-256-GCM. The matcher only ever sees the derived profile."],
+              ["A partner API", "Score a pair or rank two hundred candidates over REST, with an OpenAPI 3.1 spec."],
+            ].map(([t, d]) => (
+              <div key={t} className="py-8 md:px-8 md:first:pl-0 md:last:pr-0">
+                <div className="display text-2xl">{t}</div>
+                <p className="mt-2 text-sm leading-relaxed text-fg-muted">{d}</p>
               </div>
             ))}
           </div>
         </section>
 
-        {/* How it works */}
-        <section className="border-y border-line bg-bg-soft/60">
-          <div className="mx-auto max-w-6xl px-4 py-16 sm:px-6">
-            <div className="eyebrow mb-3">Assessment to match</div>
-            <h2 className="text-3xl font-bold tracking-tight">How a match is made</h2>
-            <div className="mt-8 grid gap-6 lg:grid-cols-3">
+        {/* Editorial statement */}
+        <section className="mx-auto max-w-7xl px-5 py-24 sm:px-8">
+          <div className="grid gap-12 lg:grid-cols-[1.3fr_1fr] lg:items-end">
+            <h2 className="display text-4xl leading-[1.05] sm:text-5xl lg:text-6xl">
+              Most matching is a number nobody can argue with, because nobody can see how it was made.
+            </h2>
+            <div className="max-w-md text-lg leading-relaxed text-fg-muted">
+              <p>
+                IP360 does the opposite. Six eligibility rules, six weighted dimensions, eight bounded modifiers. Every result ships with the
+                rule trail that produced it, so a person, a partner or an auditor can follow the reasoning line by line.
+              </p>
+              <Link href="/methodology" className="link mt-6 inline-block">
+                Read the methodology
+              </Link>
+            </div>
+          </div>
+        </section>
+
+        {/* How a match is made: photo + steps */}
+        <section className="grid lg:grid-cols-2">
+          <div className="photo photo-wash-bottom relative min-h-[420px] lg:min-h-[720px]">
+            <Image src="/images/methodology.jpg" alt="" fill sizes="(min-width:1024px) 50vw, 100vw" className="object-cover" />
+            <div className="absolute inset-x-0 bottom-0 p-8 sm:p-12">
+              <div className="display-italic text-3xl sm:text-4xl">“Show your work.”</div>
+              <p className="on-photo-muted mt-2 max-w-sm text-sm">The one rule every other rule has to obey.</p>
+            </div>
+          </div>
+          <div className="flex flex-col justify-center px-5 py-16 sm:px-12 lg:px-16">
+            <div className="eyebrow eyebrow-ember">How a match is made</div>
+            <ol className="mt-8 divide-y divide-line">
               {[
-                {
-                  step: "01",
-                  title: "PairKnow™ assessment",
-                  body: "30 agreement items across six dimensions, plus intent, children, habits, dealbreakers and preferences. Autosaved, resumable, encrypted at rest.",
-                },
-                {
-                  step: "02",
-                  title: "Structured profile",
-                  body: "Answers become a versioned JSON profile: six dimension scores, five derived traits, structured intent and preference weights. This is the only thing the matcher ever sees.",
-                },
-                {
-                  step: "03",
-                  title: "PairSync™ rules engine",
-                  body: "Six eligibility rules, weighted dimension scoring, eight bounded modifiers, a tier, and a rule-by-rule trail that explains the result in plain English.",
-                },
-              ].map((s) => (
-                <div key={s.step} className="card p-6">
-                  <div className="mono text-sm font-bold text-brand">{s.step}</div>
-                  <h3 className="mt-2 text-lg font-semibold">{s.title}</h3>
-                  <p className="mt-2 text-sm leading-relaxed text-fg-muted">{s.body}</p>
+                ["PairKnow™ assessment", "Thirty agreement items across six dimensions, plus intent, children, habits, dealbreakers and preferences. Autosaved and resumable; about eight minutes."],
+                ["Structured profile", "Answers become a versioned JSON profile: six dimension scores, five derived traits, structured intent and preference weights. It is the only thing the matcher sees."],
+                ["PairSync™ rules engine", "Eligibility first. Then weighted dimension scoring, bounded modifiers, a tier, and a rule-by-rule trail written in plain English."],
+              ].map(([t, d], i) => (
+                <li key={t} className="grid grid-cols-[3rem_1fr] gap-4 py-7 first:pt-0 last:pb-0">
+                  <span className="serif text-3xl text-ember figures">0{i + 1}</span>
+                  <div>
+                    <h3 className="display text-2xl">{t}</h3>
+                    <p className="mt-2 text-[0.95rem] leading-relaxed text-fg-muted">{d}</p>
+                  </div>
+                </li>
+              ))}
+            </ol>
+          </div>
+        </section>
+
+        {/* Read the temperature */}
+        <section className="border-t border-line bg-bg-elev">
+          <div className="mx-auto max-w-7xl px-5 py-24 sm:px-8">
+            <div className="max-w-2xl">
+              <div className="eyebrow eyebrow-ember">Read the temperature</div>
+              <h2 className="display mt-4 text-4xl sm:text-5xl">Scores you can feel.</h2>
+              <p className="mt-4 text-lg leading-relaxed text-fg-muted">
+                A match is reported on a cold-to-hot scale, so a 93 and a 58 look as different as they are. Pairs that fail a hard rule never get
+                a number at all.
+              </p>
+            </div>
+
+            <div className="mt-12 grid gap-5 md:grid-cols-3">
+              <TempCard img="/images/hot.jpg" wash="photo-wash-hot" word="Hot" range="85 and above" title="Exceptional" body="Nearly every dimension lines up. Rare, and the engine says so plainly." score={93} tier="exceptional" />
+              <TempCard img="/images/snow.jpg" wash="photo-wash-cold" word="Cold" range="Below 55" title="Limited" body="Eligible, but the profiles pull in different directions. Shown honestly, ranked last." score={48} tier="limited" />
+              <TempCard img="/images/breaker.jpg" wash="photo-wash-breaker crack" word="Breaker" range="No score" title="Ineligible" body="A dealbreaker, an intent clash or a distance limit. The failed rule is named instead of a number." score={0} tier="ineligible" />
+            </div>
+
+            <div className="mx-auto mt-14 max-w-xl">
+              <TempScale score={93} tier="exceptional" />
+              <p className="mt-2 text-center text-xs text-fg-faint">The same scale sits under every result. Ticks mark the tier thresholds.</p>
+            </div>
+          </div>
+        </section>
+
+        {/* Six dimensions */}
+        <section className="mx-auto max-w-7xl px-5 py-24 sm:px-8">
+          <div className="grid gap-12 lg:grid-cols-[1fr_1.6fr]">
+            <div>
+              <div className="eyebrow eyebrow-ember">Six dimensions</div>
+              <h2 className="display mt-4 text-4xl sm:text-5xl">What the profile measures</h2>
+              <p className="mt-4 max-w-sm text-fg-muted">
+                Five items each. Two dimensions are compared by similarity alone; four blend similarity with a trait-pairing matrix, because
+                some differences complement rather than clash.
+              </p>
+            </div>
+            <ol className="divide-y divide-line">
+              {DIMENSION_KEYS.map((k, i) => (
+                <li key={k} className="grid gap-3 py-6 first:pt-0 last:pb-0 sm:grid-cols-[3rem_1fr_auto] sm:items-baseline">
+                  <span className="serif text-xl text-fg-faint figures">0{i + 1}</span>
+                  <div>
+                    <h3 className="display text-2xl">{DIMENSIONS[k].label}</h3>
+                    <p className="mt-1.5 text-sm leading-relaxed text-fg-muted">{DIMENSIONS[k].description}</p>
+                  </div>
+                  <span className="tag self-start">{DIMENSIONS[k].comparison === "blended" ? "Similarity + pairing" : "Similarity"}</span>
+                </li>
+              ))}
+            </ol>
+          </div>
+        </section>
+
+        {/* Suite */}
+        <section className="border-y border-line">
+          <div className="mx-auto max-w-7xl px-5 py-20 sm:px-8">
+            <div className="flex flex-wrap items-end justify-between gap-4">
+              <h2 className="display text-3xl sm:text-4xl">Four stages. Two built today.</h2>
+              <p className="max-w-md text-sm text-fg-muted">PairNavigate™ and PairThrive™ plug into the same profile and event model later, without rewriting what exists.</p>
+            </div>
+            <div className="mt-10 grid gap-px overflow-hidden rounded-xl border border-line bg-line sm:grid-cols-2 lg:grid-cols-4">
+              {STAGES.map((s, i) => (
+                <div key={s.name} className={`bg-bg p-6 ${s.status === "Planned" ? "text-fg-faint" : ""}`}>
+                  <div className="flex items-center justify-between">
+                    <span className="serif text-lg figures">0{i + 1}</span>
+                    <span className={`tag ${s.status === "Built" ? "bg-ember-soft text-ember" : ""}`}>{s.status}</span>
+                  </div>
+                  <h3 className={`display mt-8 text-2xl ${s.status === "Planned" ? "" : "text-fg"}`}>{s.name}</h3>
+                  <p className="mt-2 text-sm leading-relaxed">{s.desc}</p>
                 </div>
               ))}
             </div>
           </div>
         </section>
 
-        {/* Dimensions */}
-        <section className="mx-auto max-w-6xl px-4 py-16 sm:px-6">
-          <div className="eyebrow mb-3">Six compatibility dimensions</div>
-          <h2 className="text-3xl font-bold tracking-tight">What the profile measures</h2>
-          <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {DIMENSION_KEYS.map((k) => (
-              <div key={k} className="card card-lift p-5">
-                <div className="flex items-center gap-3">
-                  <span className="h-2.5 w-2.5 rounded-full bg-gradient-to-br from-brand to-coral" />
-                  <h3 className="font-semibold">{DIMENSIONS[k].label}</h3>
-                </div>
-                <p className="mt-2 text-sm text-fg-muted">{DIMENSIONS[k].description}</p>
-                <p className="mt-3 text-xs text-fg-faint">
-                  Compared by {DIMENSIONS[k].comparison === "blended" ? "similarity + trait pairing" : "similarity"}
-                </p>
-              </div>
-            ))}
-          </div>
-        </section>
-
         {/* CTA */}
-        <section className="mx-auto max-w-6xl px-4 pb-20 sm:px-6">
-          <div className="card relative overflow-hidden p-8 sm:p-12">
-            <div className="absolute inset-0 -z-0 hero-glow" />
-            <div className="relative z-10 grid gap-8 lg:grid-cols-[1fr_auto] lg:items-center">
-              <div>
-                <h2 className="text-3xl font-bold tracking-tight">Ready to see the whole journey?</h2>
-                <p className="mt-2 max-w-xl text-fg-muted">
-                  Sign in with the demo account to walk from assessment to ranked matches, or explore the public demo with twelve seeded
-                  personas.
-                </p>
-                <p className="mt-3 text-sm text-fg-faint">
-                  Demo login: <span className="mono text-fg">demo@ip360.app</span> · <span className="mono text-fg">Demo1234!</span>
-                </p>
-              </div>
-              <div className="flex flex-wrap gap-3">
-                <Link href="/login" className="btn btn-primary">
-                  Sign in to demo
-                </Link>
-                <Link href="/developers" className="btn btn-secondary">
-                  API docs
-                </Link>
-              </div>
+        <section className="photo photo-wash-full">
+          <Image src="/images/demo.jpg" alt="" fill sizes="100vw" className="object-cover" />
+          <div className="mx-auto flex max-w-7xl flex-col items-start gap-8 px-5 py-28 sm:px-8 lg:flex-row lg:items-end lg:justify-between">
+            <div className="max-w-xl">
+              <h2 className="display text-4xl sm:text-5xl lg:text-6xl">See the whole journey.</h2>
+              <p className="on-photo-muted mt-4 text-lg">
+                Walk from assessment to ranked matches with the demo account, or compare any two of the twelve personas in public.
+              </p>
+              <p className="on-photo-faint mt-3 text-sm">
+                Demo login <span className="mono text-[#fbf7f1]">demo@ip360.app</span> · <span className="mono text-[#fbf7f1]">Demo1234!</span>
+              </p>
+            </div>
+            <div className="flex flex-wrap gap-3">
+              <Link href="/demo" className="btn btn-paper btn-lg">
+                Open the live demo
+              </Link>
+              <Link href="/developers" className="btn btn-outline-paper btn-lg">
+                API docs
+              </Link>
             </div>
           </div>
         </section>
       </main>
       <SiteFooter />
     </>
+  );
+}
+
+function ScoreRingOnGlass() {
+  return (
+    <div data-theme="dark" style={{ ["--bg-elev" as string]: "rgba(23,20,26,0.01)", ["--bg-soft" as string]: "rgba(251,247,241,0.16)", ["--fg" as string]: "#fbf7f1", ["--fg-faint" as string]: "rgba(251,247,241,0.5)" }}>
+      <ScoreRing score={93} tier="exceptional" size={110} stroke={10} degree label="temp" />
+    </div>
+  );
+}
+
+function TempCard({ img, wash, word, range, title, body, score, tier }: { img: string; wash: string; word: string; range: string; title: string; body: string; score: number; tier: "exceptional" | "limited" | "ineligible" }) {
+  return (
+    <div className={`photo ${wash} card-lift flex min-h-[380px] flex-col justify-between rounded-2xl p-6`}>
+      <Image src={img} alt="" fill sizes="(min-width:768px) 33vw, 100vw" className="object-cover" />
+      <div className="flex items-start justify-between">
+        <div>
+          <div className="display text-3xl">{word}</div>
+          <div className="on-photo-faint mt-1 text-xs font-semibold uppercase tracking-[0.14em]">{range}</div>
+        </div>
+        <div style={{ ["--bg-elev" as string]: "rgba(0,0,0,0)", ["--bg-soft" as string]: "rgba(251,247,241,0.18)", ["--fg" as string]: "#fbf7f1", ["--fg-faint" as string]: "rgba(251,247,241,0.5)" }}>
+          <ScoreRing score={score} tier={tier} size={72} stroke={7} />
+        </div>
+      </div>
+      <div>
+        <div className="text-lg font-semibold">{title}</div>
+        <p className="on-photo-muted mt-1 text-sm leading-relaxed">{body}</p>
+      </div>
+    </div>
   );
 }

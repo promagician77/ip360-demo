@@ -2,6 +2,7 @@ import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
 import { ApiConsole } from "@/components/ApiConsole";
 import { env } from "@/lib/server/env";
+import { PageHero } from "@/components/PageHero";
 
 export const metadata = { title: "API docs" };
 
@@ -19,20 +20,15 @@ export default function DevelopersPage() {
   return (
     <>
       <SiteHeader />
-      <main className="mx-auto w-full max-w-6xl flex-1 px-4 py-10 sm:px-6">
-        <div className="mb-8">
-          <div className="eyebrow mb-2">PairSync™ REST API</div>
-          <h1 className="text-3xl font-bold tracking-tight sm:text-4xl">Integrate matching into any platform</h1>
-          <p className="mt-2 max-w-2xl text-fg-muted">
-            The matching engine is exposed as a stateless API. Send two compatibility profiles, get back a score, a tier and a plain-English
-            explanation. Profiles can come from our PairKnow™ assessment or from your own data mapped to the profile schema.
-          </p>
-        </div>
-
+      <PageHero img="/images/api.jpg" eyebrow="PairSync™ REST API" title={<>Integrate matching into <span className="display-italic">any</span> platform.</>} wash="photo-wash-full">
+        The matching engine is exposed as a stateless API. Send two compatibility profiles, get back a score, a tier and a plain-English
+        explanation. Profiles can come from our PairKnow™ assessment or from your own data mapped to the profile schema.
+      </PageHero>
+      <main className="mx-auto w-full max-w-7xl flex-1 px-5 py-10 sm:px-8">
         <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_320px]">
           <div className="min-w-0 space-y-6">
             <div className="card p-6">
-              <h2 className="font-semibold">Endpoints</h2>
+              <h2 className="display text-2xl">Endpoints</h2>
               <div className="mt-4 divide-y divide-line">
                 {ENDPOINTS.map((e) => (
                   <div key={e.path} className="grid gap-1 py-3 sm:grid-cols-[70px_1fr] sm:gap-4">
@@ -48,7 +44,7 @@ export default function DevelopersPage() {
             </div>
 
             <div className="card p-6">
-              <h2 className="font-semibold">Authentication</h2>
+              <h2 className="display text-2xl">Authentication</h2>
               <p className="mt-2 text-sm text-fg-muted">
                 Partner keys are issued from the admin console and stored as SHA-256 hashes. Send the key as a bearer token or in the{" "}
                 <code className="mono text-xs">X-API-Key</code> header. Keys carry scopes and can be revoked instantly.
@@ -60,7 +56,7 @@ export default function DevelopersPage() {
             </div>
 
             <div className="card p-6">
-              <h2 className="font-semibold">Response shape</h2>
+              <h2 className="display text-2xl">Response shape</h2>
               <pre className="code mt-4">{`{
   "result": {
     "engineVersion": "1.0.0",
@@ -85,7 +81,7 @@ export default function DevelopersPage() {
             </div>
 
             <div className="card p-6">
-              <h2 className="font-semibold">Errors</h2>
+              <h2 className="display text-2xl">Errors</h2>
               <p className="mt-2 text-sm text-fg-muted">All errors share one envelope. Validation errors list every failing field path.</p>
               <pre className="code mt-4">{`{ "error": { "code": "validation_error", "message": "Request body failed validation.",
   "details": [{ "path": "profileA.demographics.age", "message": "Too small: expected number to be >=18" }] } }`}</pre>

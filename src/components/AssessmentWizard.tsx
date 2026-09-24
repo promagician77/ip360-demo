@@ -247,7 +247,7 @@ export function AssessmentWizard({ retake }: { retake: boolean }) {
             </span>
           </div>
           <div className="mt-2">
-            <Bar value={progress} height={6} />
+            <Bar value={progress} height={6} color="var(--ink)" ticks={false} />
           </div>
         </div>
 

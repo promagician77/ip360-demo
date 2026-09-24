@@ -19,8 +19,8 @@ export default async function DashboardPage() {
   return (
     <div className="space-y-8">
       <div>
-        <div className="eyebrow mb-2">Overview</div>
-        <h1 className="text-3xl font-bold tracking-tight">Hi {user.displayName.split(" ")[0]}.</h1>
+        <div className="eyebrow eyebrow-ember mb-2">Overview</div>
+        <h1 className="display text-4xl">Hi {user.displayName.split(" ")[0]}.</h1>
         <p className="mt-1 text-fg-muted">
           {profile ? "Your compatibility profile is ready. Here's how your matches look today." : "Complete the PairKnow™ assessment to unlock your profile and matches."}
         </p>
@@ -38,7 +38,7 @@ export default async function DashboardPage() {
               </p>
               {state.status === "in_progress" && (
                 <div className="mt-4 max-w-sm">
-                  <Bar value={(answered / TOTAL_ITEMS) * 100} />
+                  <Bar value={(answered / TOTAL_ITEMS) * 100} color="var(--ink)" ticks={false} />
                 </div>
               )}
             </div>

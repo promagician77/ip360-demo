@@ -26,8 +26,8 @@ export default async function AdminPage() {
   return (
     <div className="space-y-8">
       <div>
-        <div className="eyebrow mb-2">Admin</div>
-        <h1 className="text-3xl font-bold tracking-tight">Platform overview</h1>
+        <div className="eyebrow eyebrow-ember mb-2">Admin</div>
+        <h1 className="display text-4xl">Platform overview</h1>
         <p className="mt-1 text-fg-muted">Usage counts, partner API keys and recent API traffic.</p>
       </div>
 

@@ -35,13 +35,13 @@ export function AuthForm({ mode }: { mode: "login" | "register" }) {
   }
 
   return (
-    <form onSubmit={submit} className="card w-full max-w-md p-8">
-      <h1 className="text-2xl font-bold tracking-tight">{mode === "login" ? "Welcome back" : "Create your account"}</h1>
-      <p className="mt-1 text-sm text-fg-muted">
+    <form onSubmit={submit} className="w-full max-w-md">
+      <h1 className="display text-4xl">{mode === "login" ? "Welcome back" : "Create your account"}</h1>
+      <p className="mt-2 text-sm text-fg-muted">
         {mode === "login" ? "Sign in to continue your PairKnow™ journey." : "It takes about eight minutes to complete the assessment."}
       </p>
 
-      <div className="mt-6 space-y-4">
+      <div className="mt-8 space-y-4">
         {mode === "register" && (
           <div>
             <label className="label" htmlFor="displayName">
@@ -74,7 +74,7 @@ export function AuthForm({ mode }: { mode: "login" | "register" }) {
         </div>
       </div>
 
-      {error && <div className="mt-4 rounded-xl border border-red-200 bg-rose-soft px-3 py-2 text-sm text-red-700 dark:border-red-900 dark:text-red-300">{error}</div>}
+      {error && <div className="mt-4 rounded-lg border border-ember/30 bg-ember-soft px-3 py-2 text-sm text-ember">{error}</div>}
 
       <button className="btn btn-primary mt-6 w-full" disabled={busy}>
         {busy && <Spinner />}
@@ -82,7 +82,7 @@ export function AuthForm({ mode }: { mode: "login" | "register" }) {
       </button>
 
       {mode === "login" && (
-        <div className="mt-4 rounded-xl bg-bg-soft p-3 text-xs text-fg-muted">
+        <div className="mt-4 rounded-lg border border-line bg-bg-soft/60 p-3 text-xs text-fg-muted">
           Demo credentials are pre-filled: <span className="mono text-fg">demo@ip360.app</span> / <span className="mono text-fg">Demo1234!</span>
         </div>
       )}
@@ -91,14 +91,14 @@ export function AuthForm({ mode }: { mode: "login" | "register" }) {
         {mode === "login" ? (
           <>
             New here?{" "}
-            <Link href="/register" className="font-semibold text-brand">
+            <Link href="/register" className="link">
               Create an account
             </Link>
           </>
         ) : (
           <>
             Already have an account?{" "}
-            <Link href="/login" className="font-semibold text-brand">
+            <Link href="/login" className="link">
               Sign in
             </Link>
           </>

@@ -38,8 +38,8 @@ export default async function ProfilePage({ searchParams }: { searchParams: Prom
       )}
       <div className="flex items-end justify-between gap-4">
         <div>
-          <div className="eyebrow mb-2">PairKnow™ profile</div>
-          <h1 className="text-3xl font-bold tracking-tight">Your compatibility profile</h1>
+          <div className="eyebrow eyebrow-ember mb-2">PairKnow™ profile</div>
+          <h1 className="display text-4xl">Your compatibility profile</h1>
           <p className="mt-1 text-fg-muted">Schema v{profile.schemaVersion} · generated {profile.meta.generatedAt ? new Date(profile.meta.generatedAt).toLocaleString() : "—"}</p>
         </div>
         <Link href="/app/matches" className="btn btn-primary hidden sm:inline-flex">

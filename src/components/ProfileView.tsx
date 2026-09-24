@@ -22,7 +22,7 @@ export function ProfileView({ profile, compact = false }: { profile: Compatibili
         <div className="flex flex-wrap items-start gap-5">
           <Avatar name={profile.displayName} size={64} />
           <div className="min-w-0 flex-1">
-            <h2 className="text-2xl font-bold tracking-tight">
+            <h2 className="display text-3xl">
               {profile.displayName}, {profile.demographics.age}
             </h2>
             <div className="mt-0.5 text-sm text-fg-muted">
@@ -30,7 +30,7 @@ export function ProfileView({ profile, compact = false }: { profile: Compatibili
             </div>
             {profile.demographics.bio && <p className="mt-2 text-sm italic text-fg-muted">“{profile.demographics.bio}”</p>}
             <div className="mt-3 flex flex-wrap gap-2">
-              <span className="pill bg-brand-soft text-brand-strong">{CHOICE_LABELS.intent[profile.intent]}</span>
+              <span className="pill bg-ember-soft text-ember">{CHOICE_LABELS.intent[profile.intent]}</span>
               <span className="pill bg-plum-soft text-plum">{CHOICE_LABELS.children[profile.children]}</span>
               <span className="pill bg-bg-soft text-fg-muted">{CHOICE_LABELS.relocation[profile.relocation]}</span>
               <span className="pill bg-bg-soft text-fg-muted">Faith {profile.faithImportance}/5</span>
@@ -43,11 +43,11 @@ export function ProfileView({ profile, compact = false }: { profile: Compatibili
 
       <div className="grid gap-6 lg:grid-cols-[300px_1fr]">
         <div className="card flex flex-col items-center p-6">
-          <h3 className="self-start font-semibold">Dimension map</h3>
-          <RadarChart series={[{ name: profile.displayName, scores: profile.dimensions, color: "var(--brand)" }]} size={280} />
+          <h3 className="display self-start text-2xl">Dimension map</h3>
+          <RadarChart series={[{ name: profile.displayName, scores: profile.dimensions, color: "var(--ember)" }]} size={280} />
         </div>
         <div className="card p-6">
-          <h3 className="font-semibold">Dimension scores</h3>
+          <h3 className="display text-2xl">Dimension scores</h3>
           <div className="mt-4 space-y-4">
             {DIMENSION_KEYS.map((k) => (
               <div key={k}>
@@ -69,7 +69,7 @@ export function ProfileView({ profile, compact = false }: { profile: Compatibili
 
       <div className="grid gap-6 lg:grid-cols-2">
         <div className="card p-6">
-          <h3 className="font-semibold">Derived traits</h3>
+          <h3 className="display text-2xl">Derived traits</h3>
           <p className="mt-1 text-xs text-fg-muted">Computed from specific items using the documented trait rules.</p>
           <div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-3">
             {TRAIT_ORDER.map((t) => (
@@ -81,7 +81,7 @@ export function ProfileView({ profile, compact = false }: { profile: Compatibili
           </div>
         </div>
         <div className="card p-6">
-          <h3 className="font-semibold">Preferences & dealbreakers</h3>
+          <h3 className="display text-2xl">Preferences & dealbreakers</h3>
           <dl className="mt-4 grid grid-cols-2 gap-x-4 gap-y-3 text-sm">
             <dt className="text-fg-muted">Seeking</dt>
             <dd className="font-medium">{profile.preferences.seeking.map((g) => CHOICE_LABELS.gender[g]).join(", ")}</dd>

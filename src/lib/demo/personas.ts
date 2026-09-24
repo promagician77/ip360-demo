@@ -126,7 +126,7 @@ export const DEMO_PERSONAS: DemoPersona[] = [
       maxDistanceKm: 500,
       dealbreakers: [],
       weights: w(1, 2, 3, 2, 1, 3),
-      likert: likert(W([2, 4, 3, 1, 3], [3, 2, 2, 4, 3], [5, 1, 3, 5, 1], [4, 3, 5, 3, 3], [1, 2, 2, 1, 2], [4, 3, 5, 4, 2])),
+      likert: likert(W([1, 3, 2, 1, 2], [2, 1, 1, 5, 2], [5, 1, 2, 5, 1], [2, 2, 5, 2, 4], [1, 1, 1, 1, 1], [5, 2, 5, 5, 1])),
     },
   },
   {
@@ -256,7 +256,7 @@ export const DEMO_PERSONAS: DemoPersona[] = [
       maxDistanceKm: 120,
       dealbreakers: [],
       weights: w(2, 3, 2, 3, 2, 2),
-      likert: likert(W([4, 5, 3, 2, 5], [5, 1, 4, 1, 5], [3, 2, 3, 4, 3], [4, 5, 4, 5, 1], [3, 3, 4, 2, 2], [4, 4, 3, 5, 4])),
+      likert: likert(W([4, 5, 3, 2, 5], [5, 1, 4, 1, 5], [2, 5, 3, 1, 4], [4, 5, 4, 5, 1], [4, 4, 4, 3, 3], [4, 4, 3, 5, 4])),
     },
   },
   {
@@ -266,7 +266,7 @@ export const DEMO_PERSONAS: DemoPersona[] = [
     ...CITIES.austin,
     responses: {
       displayName: "Grace",
-      age: 27,
+      age: 28,
       gender: "woman",
       city: CITIES.austin.city,
       bio: "Faith first, then everything else falls into place.",
@@ -334,7 +334,7 @@ export const DEMO_PERSONAS: DemoPersona[] = [
       maxDistanceKm: 300,
       dealbreakers: ["smoker"],
       weights: w(3, 2, 2, 3, 3, 2),
-      likert: likert(W([4, 5, 5, 3, 4], [4, 2, 4, 2, 4], [4, 3, 5, 3, 2], [5, 4, 3, 5, 1], [4, 5, 2, 3, 4], [4, 4, 3, 5, 3])),
+      likert: likert(W([5, 5, 4, 5, 5], [4, 2, 4, 2, 4], [1, 5, 2, 1, 5], [3, 4, 2, 5, 2], [5, 5, 4, 5, 4], [5, 5, 1, 3, 5])),
     },
   },
   {
@@ -357,7 +357,7 @@ export const DEMO_PERSONAS: DemoPersona[] = [
       seeking: ["woman", "nonbinary"],
       ageMin: 25,
       ageMax: 38,
-      maxDistanceKm: 80,
+      maxDistanceKm: 260,
       dealbreakers: [],
       weights: w(2, 3, 3, 3, 2, 3),
       likert: likert(W([4, 4, 3, 3, 4], [5, 2, 5, 2, 4], [4, 3, 3, 3, 2], [4, 5, 4, 5, 2], [3, 3, 4, 2, 2], [4, 5, 3, 4, 4])),
